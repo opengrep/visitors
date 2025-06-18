@@ -1,0 +1,93 @@
+# To Do
+
+## Documentation.
+
+* Document that `polymorphic` and `monomorphic` can take a list of
+  type variable names (without the leading quote) as a parameter.
+  Show an example where the methods are polymorphic in their main
+  argument but monomorphic in `'env`. (Suggested by Devon Loehr.)
+
+* Document [Jonathan's
+  example](https://github.com/FStarLang/karamel/blob/master/lib/Ast.ml) where
+  every node in an expression carries a type and the visitor for expressions
+  carries the type down, whereas the visitor for types doesn't.
+
+* Document `hexpr_polymorphic` (an example).
+  Make `VisitorsHashcons` available as a library.
+
+## Cleanup
+
+* Better clean up & share code at the three call sites of `bulk`.
+
+## Minor improvements
+
+* If there is an error, then the warnings are never seen,
+  because they are placed in the generated code.
+  Can we fix this?
+  e.g. `type t = A of (int -> int)[@opaque]`
+
+* In fully polymorphic mode, perhaps one could allow `[@@deriving visitors]`
+  to be used in an `.mli` file, producing class types.
+
+* In polymorphic mode, we could annotate every invocation of an external
+  visitor method with its expected (polymorphic) type, so as to get better
+  type error messages if this method does not have the expected type.
+
+* Ideally, a visitor method should be parameterized with `visit_'a`
+  only if `'a` appears in the type of some component.
+  It would be good if a type parameter `'a` could be declared never-visited,
+  so the method or function `visit_'a` would be unneeded.
+  This could be useful for phantom type parameters, GADTs, `'bn`, etc.
+  The problem is, when a nonlocal type constructor is applied,
+  we cannot know which parameters are phantom.
+  Unless we find a way of declaring that, too?
+
+* Think about enabling polymorphic and `fold` together.
+  That would require letting the user specify the result type
+  associated with each type constructor.
+
+* Add `opaque` as an option, carrying a list of types.
+  That would be lighter than writing `[@opaque]` at every occurrence.
+
+* Include an option `except t` to omit the definition of visitor methods for
+  the type `t`. That would allow the user to provide their own implementation,
+  (possibly inherited / polymorphic), without having to satisfy the type
+  constraints imposed by our implementation. For example, one could generate a
+  `map` visitor where one type (in a family) is rewritten to something
+  completely different.
+
+* Detect and reject existential types and GADTs.
+
+## Testing
+
+* Develop a real test suite, with expected output.
+  Check for left-to-right traversal order.
+  Release the test suite, too?
+  Some tests have dependencies on other packages: hashcons, core_bench...
+  Run these tests only if these packages are installed, warn otherwise?
+
+* One could define a `fold` visitor where the methods receive the names of the
+  types, data constructors, and record fields that are being visited. (As in
+  `ppx_tools/genlifter`.)
+
+## Future work
+
+* In `fold`, the `build_` methods could take not only the results of the
+  recursive calls, but also their arguments (for added expressive power).
+  That would be a true recursor (David Chemouil).
+
+* Deal with GADTs?
+
+* Could we have visitors where a state is explicitly threaded from left to
+  right? (David Chemouil.) For greater generality, maybe we should have
+  monadic visitors. Currently, the environment monad (a reader monad) is
+  built-in. Could we let the user choose which monad should be used, without
+  breaking compatibility?
+
+* Develop `[@deriving zippers]` to produce a type of zippers,
+  and add an option for the environment to be a zipper
+  that is extended at every recursive call. (Yann Régis-Gianas.)
+  Parameterize the type of zippers by the type of their root
+  and allow the constructor `Nil` only when the root type and
+  the current type coincide. (GADT.)
+  So that we get `n` zipper types out of `n` source types.
