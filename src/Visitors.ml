@@ -1009,6 +1009,7 @@ let rec visit_type (env_in_scope : bool) (ty : core_type) : expression =
   | _, _, Ptyp_variant _
   | _, _, Ptyp_poly _
   | _, _, Ptyp_package _
+  | _, _, Ptyp_open _
   | _, _, Ptyp_extension _ ->
       unsupported ty
 
