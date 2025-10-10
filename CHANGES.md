@@ -1,5 +1,14 @@
 # Changes
 
+## 2025/10/10
+
+* Compatibility with OCaml 5.4.
+
+* Switch to version 0.36.0 of `ppxlib`, which exposes the OCaml 5.2 AST
+  (or perhaps newer, I am not sure).
+
+* Require OCaml 4.14.2 or newer.
+
 ## 2025/02/12
 
 * `visitors` would sometimes produce an empty universal quantification.
