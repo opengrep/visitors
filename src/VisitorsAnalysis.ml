@@ -279,6 +279,8 @@ let rec occurs_type (alpha : tyvar) (ty : core_type) : unit =
         occurs_type alpha ty
   | Ptyp_package (_, ltys) ->
       List.iter (fun (_, ty) -> occurs_type alpha ty) ltys
+  | Ptyp_open (_, ty) ->
+      occurs_type alpha ty
   | Ptyp_extension (_, payload) ->
       occurs_payload alpha payload
 
@@ -325,6 +327,8 @@ let rec at_opaque (f : core_type -> unit) (ty : core_type) : unit =
   | NonOpaque, Ptyp_any
   | NonOpaque, Ptyp_var _ ->
       ()
+  | NonOpaque, Ptyp_open (_, ty) ->
+      at_opaque f ty
   | NonOpaque, Ptyp_tuple tys
   | NonOpaque, Ptyp_constr (_, tys) ->
       List.iter (at_opaque f) tys
@@ -398,6 +402,7 @@ let rec subst_type (sigma : substitution) (ty : core_type) : core_type =
   | NonOpaque, Ptyp_variant _
   | NonOpaque, Ptyp_poly _
   | NonOpaque, Ptyp_package _
+  | NonOpaque, Ptyp_open _
   | NonOpaque, Ptyp_extension _ ->
       unsupported ty
 
