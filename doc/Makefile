@@ -2,10 +2,13 @@ export VISITORS_BUILDING_DOCUMENTATION=true
 
 include ../Makefile.preprocess
 
+# From test/ppx_import we read source files only, not preprocessed files.
+# This allows us to build the manual without installing ppx_import, which
+# is fortunate, as this package tends to be often late / unavailable.
+
 export TEXINPUTS=.:../test:../test/ppx_import:
 
-SOURCEDIRS := ../test,../test/ppx_import
-ML         := $(shell ls {$(SOURCEDIRS)}/*.ml | grep -v cppo | grep -v processed)
+ML         := $(shell ls ../test/*.ml | grep -v cppo | grep -v processed)
 PROCESSED  := $(patsubst %.ml,%.processed.ml,$(ML))
 
 .PHONY: all loop clean prerequisites sources
@@ -25,7 +28,7 @@ clean:
 # We need the following packages, plus visitors itself,
 # which we install in the current switch.
 prerequisites:
-	opam install --yes ocamlfind ppx_import ppx_tools ocp-indent
+	opam install --yes ocamlfind ppx_tools ocp-indent
 	make -C .. install
 
 sources: $(wildcard *.tex) $(wildcard *.bib) $(wildcard *.sty) $(ML) $(PROCESSED)
