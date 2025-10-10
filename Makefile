@@ -59,6 +59,7 @@ VERSIONS := \
   5.1.0 \
   5.2.0 \
   5.3.0 \
+  5.4.0 \
 
 # Disable this switch for now, as core_bench does not seem to work under it.
 # 4.09.0+bytecode-only \
@@ -190,7 +191,7 @@ release:
 	@ echo "Done."
 	@ echo "If happy, please type:"
 	@ echo "  \"make publish\"   to push this release to gitlab.inria.fr"
-	@ echo "  \"make export\"    to upload the manual to yquem.inria.fr"
+	@ echo "  \"make export\"    to upload the manual to yquem.paris.inria.fr"
 	@ echo "  \"make opam\"      to create a new opam package"
 	@ echo "Otherwise, please type:"
 	@ echo "  \"make undo\"      to undo this release"
@@ -216,7 +217,7 @@ undo:
 # This assumes that [make release] has been run on the same day.
 
 RSYNC   := scp -p -C
-TARGET  := yquem.inria.fr:public_html/$(THIS)/
+TARGET  := yquem.paris.inria.fr:public_html/$(THIS)/
 
 .PHONY: export
 export:
