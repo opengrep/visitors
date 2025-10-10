@@ -26,8 +26,10 @@
   Can we fix this?
   e.g. `type t = A of (int -> int)[@opaque]`
 
-* In fully polymorphic mode, perhaps one could allow `[@@deriving visitors]`
+* One would like to allow `[@@deriving visitors]`
   to be used in an `.mli` file, producing class types.
+  (Perhaps this is easier in fully polymorphic mode.)
+  (Perhaps this is easier in the absence of inherited classes.)
 
 * In polymorphic mode, we could annotate every invocation of an external
   visitor method with its expected (polymorphic) type, so as to get better
