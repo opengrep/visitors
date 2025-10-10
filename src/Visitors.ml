@@ -1,6 +1,6 @@
 open VisitorsString
 open VisitorsList
-open Ppxlib
+open Ppxlib (* https://ocaml-ppx.github.io/ppxlib/ppxlib/Ppxlib/ *)
 open List
 open Asttypes
 open Parsetree
@@ -93,31 +93,33 @@ type tycon_visitor_method =
 
 let protect_tycon_visitor_method : tycon_visitor_method wrapper =
   fun tycon_visitor_method ->
-    let format : (_, _, _, _) format4 =
+    let equal (_, _, x) (_, _, y) =
+      x = y
+    and warn (_, _, x) (loc, _, y) m =
+      warning loc
       "%s: name clash: the types %s and %s\n\
        both have visitor methods named %s.\n\
        Please consider using [@@name] at type declaration sites\n\
        or [@name] at type reference sites."
+      plugin (Longident.name x) (Longident.name y) m
     in
-    let id = print_longident in
-    protect tycon_visitor_method
-      (fun (_, _, x) (_, _, y) -> x = y)
-      (fun (_, _, x) (loc, _, y) m -> warning loc format plugin (id x) (id y) m)
+    protect tycon_visitor_method equal warn
 
 type datacon_descending_method =
   constructor_declaration -> methode
 
 let protect_datacon_descending_method : datacon_descending_method wrapper =
   fun datacon_descending_method ->
-    let format : (_, _, _, _) format4 =
+    let equal cd1 cd2 =
+      cd1 == cd2
+    and warn cd1 cd2 m =
+      warning cd2.pcd_loc
       "%s: name clash: the data constructors %s and %s\n\
        both have visitor methods named %s.\n\
        Please consider using [@name] at data constructor declaration sites."
+      plugin cd1.pcd_name.txt cd2.pcd_name.txt m
     in
-    let id cd = cd.pcd_name.txt in
-    protect datacon_descending_method
-      (fun cd1 cd2 -> cd1 == cd2)
-      (fun cd1 cd2 m -> warning cd2.pcd_loc format plugin (id cd1) (id cd2) m)
+    protect datacon_descending_method equal warn
 
 (* -------------------------------------------------------------------------- *)
 
