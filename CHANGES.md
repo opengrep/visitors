@@ -1,5 +1,16 @@
 # Changes
 
+## 2025/11/XX
+
+* Install a new executable command,
+  `visitors_preprocess`,
+  to preprocess an OCaml source file
+  and see the result.
+
+* Update `Makefile.preprocess` to use `visitors_preprocess`.
+
+* Require `ppxlib` version 0.37.0 or newer.
+
 ## 2025/10/10
 
 * Compatibility with OCaml 5.4.
