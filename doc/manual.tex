@@ -123,12 +123,8 @@ following commands:
   opam update
   opam install visitors
 \end{lstlisting}
-To use the package, an \ocamlbuild user should add the
-following line in her project's \texttt{\_tags} file:
-\begin{lstlisting}[keywords={}]
-  true: package(visitors.ppx)
-\end{lstlisting}
-while a user of \dune should add the following incantation
+To use the package,
+a user of \dune should add the following incantation
 to her project's \texttt{dune} file,
 inside a \texttt{library} or \texttt{executable} stanza:
 \begin{lstlisting}[keywords={}]
@@ -271,13 +267,13 @@ omitted altogether or be written by hand.
 
 \input{types}
 
-Nevertheless, the type of the generated code can be inspected, if desired, by
-requesting the OCaml compiler to infer and display it. For this purpose, one
-can use a command of the following form:
-\begin{quote}
-\verb|ocamlbuild -use-ocamlfind <other-flags> %.inferred.mli|
-\end{quote}
-% TEMPORARY explain how to it using Dune
+% Nevertheless, the type of the generated code can be inspected, if desired, by
+% requesting the OCaml compiler to infer and display it. For this purpose, one
+% can use a command of the following form:
+% \begin{quote}
+%   \verb|ocamlbuild -use-ocamlfind <other-flags> %.inferred.mli|
+% \end{quote}
+% TODO explain how to see the inferred type using Dune
 
 \fref{fig:inferred} shows the type that is inferred via such a command for the
 \iter visitor of \fref{fig:expr00}. This type is rather verbose, for two
