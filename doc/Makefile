@@ -11,7 +11,7 @@ export TEXINPUTS=.:../test:../test/ppx_import:
 ML         := $(shell ls ../test/*.ml | grep -v cppo | grep -v processed)
 PROCESSED  := $(patsubst %.ml,%.processed.ml,$(ML))
 
-.PHONY: all loop clean prerequisites sources
+.PHONY: all loop view clean prerequisites sources
 
 all: prerequisites
 	make sources
@@ -20,6 +20,9 @@ all: prerequisites
 loop: prerequisites
 	make sources
 	latexmk -pdf -pvc manual
+
+view: all
+	open manual.pdf
 
 clean:
 	rm -f $(PROCESSED)
