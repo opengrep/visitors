@@ -1,6 +1,6 @@
 # Changes
 
-## 2025/11/XX
+## 2025/11/12
 
 * Install a new executable command,
   `visitors_preprocess`,
