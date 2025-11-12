@@ -5,9 +5,7 @@
 # This assumes the visitors package is installed.
 
 # The rewriting command.
-PPX          := `ocamlfind query ppx_deriving`/ppx_deriving \
-                `ocamlfind query visitors`/ppx/ppx_deriving_visitors.cma
-REWRITE      := ocamlfind ppx_tools/rewriter -ppx '$(PPX)'
+REWRITE      := visitors_preprocess
 
 # Use GNU sed to extract the generated code.
 # This requires GNU sed 3.95 or above, I am told.

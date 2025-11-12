@@ -31,7 +31,7 @@ clean:
 # We need the following packages, plus visitors itself,
 # which we install in the current switch.
 prerequisites:
-	opam install --yes ocamlfind ppx_tools ocp-indent
+	opam install --yes ocp-indent
 	make -C .. install
 
 sources: $(wildcard *.tex) $(wildcard *.bib) $(wildcard *.sty) $(ML) $(PROCESSED)
