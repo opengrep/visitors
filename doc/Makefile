@@ -31,7 +31,8 @@ clean:
 # We need the following packages, plus visitors itself,
 # which we install in the current switch.
 prerequisites:
-	opam install --yes ocp-indent
-	make -C .. install
+	@ if ! command -v ocp-indent >/dev/null ; then \
+	  echo "Error: ocp-indent is not installed." ; exit 1 ; \
+	fi
 
 sources: $(wildcard *.tex) $(wildcard *.bib) $(wildcard *.sty) $(ML) $(PROCESSED)
