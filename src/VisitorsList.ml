@@ -61,32 +61,6 @@ let transpose (n : int) (xss : 'a list list) : 'a list list =
 let hextend (xs : 'a list) (n : int) (f : int -> 'a -> 'a) : 'a list list =
   map (fun x -> init 0 n (fun j -> f j x)) xs
 
-(* [uniq cmp xs] assumes that the list [xs] is sorted according to the
-   ordering [cmp] and returns the list [xs] deprived of any duplicate
-   elements. *)
-
-let rec uniq1 cmp x ys =
-  match ys with
-  | [] ->
-      []
-  | y :: ys ->
-      if cmp x y = 0 then
-        uniq1 Stdlib.compare x ys
-      else
-        y :: uniq1 cmp y ys
-
-let uniq cmp xs =
-  match xs with
-  | [] ->
-      []
-  | x :: xs ->
-      x :: uniq1 cmp x xs
-
-(* [weed cmp xs] returns the list [xs] deprived of any duplicate elements. *)
-
-let weed cmp xs =
-  uniq cmp (List.sort cmp xs)
-
 (* [fold_right1] is like [fold_right], but uses the last element of the list
    (if the list is nonempty) as the initial accumulator, saving one call to
    the binary operation [f]. This is equivalent to [fold_right] if [accu] is

@@ -514,7 +514,7 @@ end = struct
        OCaml supports this, but it looks tidier if we remove duplicates. *)
     let virtual_methods, concrete_methods = List.partition is_virtual methods in
     let cmp meth1 meth2 = Stdlib.compare (method_name meth1) (method_name meth2) in
-    let virtual_methods = VisitorsList.weed cmp virtual_methods in
+    let virtual_methods = List.sort_uniq cmp virtual_methods in
     let methods = virtual_methods @ concrete_methods in
     List.map meth2cf methods
 
