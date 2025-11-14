@@ -390,7 +390,7 @@ whence the name ``\mapendo''.
 \map visitors are not subject to this restriction: for an illustration, see
 \sref{sec:advanced:hashconsed} and \fref{fig:expr14}.
 
-In principle, \mapendo visitors should be created only for immutable data
+\mapendo visitors should be created only for immutable data
 structures. Although the tool can produce an \mapendo visitor for a mutable
 data structure, this is discouraged, as it may lead to unexpected behavior.
 
@@ -613,6 +613,20 @@ due to restrictions imposed by OCaml's type discipline (\sref{sec:map_from_fold}
 \label{fig:expr02}
 \end{figure}
 
+\begin{figure}[p]
+\codefollowup{expr02}
+\origfirstline{expr05}{3}
+\caption{Determining whether two expressions are syntactically equal}
+\label{fig:expr05}
+\end{figure}
+
+\begin{figure}[p]
+\codefollowup{expr02}
+\origfirstline{expr05lexico}{3}
+\caption{Determining which way two expressions are ordered}
+\label{fig:expr05lexico}
+\end{figure}
+
 \begin{comment}
 \begin{figure}[p]
 \orig{expr03}
@@ -646,20 +660,6 @@ In \fref{fig:expr02}, we have added the optional parameter
 to indicate that the generated class should not be virtual. (By default,
 every generated class is declared \oc|virtual|.) We do this because, in
 the illustration that follows, we wish to instantiate this class.
-
-\begin{figure}[p]
-\codefollowup{expr02}
-\origfirstline{expr05}{3}
-\caption{Determining whether two expressions are syntactically equal}
-\label{fig:expr05}
-\end{figure}
-
-\begin{figure}[p]
-\codefollowup{expr02}
-\origfirstline{expr05lexico}{3}
-\caption{Determining which way two expressions are ordered}
-\label{fig:expr05lexico}
-\end{figure}
 
 As an illustration, in \fref{fig:expr05}, we use an \itertwo visitor to write
 a function that tests whether two expressions are syntactically equal. This is
