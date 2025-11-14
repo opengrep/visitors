@@ -1,6 +1,12 @@
 # Changes
 
-## 2025/11/12
+## 2025/11/14
+
+* `visitors` now decorates every generated method with a type annotation.
+  This can help understand the generated code. More importantly, this enables
+  type-directed disambiguation, so `visitors` now supports situations where
+  two distinct types have a field or a data constructor by the same name.
+  (Reported by Guillaume Boisseau. Contributed by Sacha Élie-Ayoun.)
 
 * Install a new executable command,
   `visitors_preprocess`,
