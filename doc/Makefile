@@ -15,7 +15,7 @@ PROCESSED  := $(patsubst %.ml,%.processed.ml,$(ML))
 
 all: prerequisites
 	make sources
-	latexmk -g -pdf manual
+	latexmk -pdf manual
 
 loop: prerequisites
 	make sources
