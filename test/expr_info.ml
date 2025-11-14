@@ -1,8 +1,8 @@
-type 'info expr_node =
+type 'i expr_node =
   | EConst of int
-  | EAdd of 'info expr * 'info expr
+  | EAdd of 'i expr * 'i expr
 
-and 'info expr =
-  { info: 'info; node: 'info expr_node }
+and 'i expr =
+  { info: 'i; node: 'i expr_node }
 
 [@@deriving visitors { variety = "map" }]
