@@ -4,8 +4,15 @@
 
 # This assumes the visitors package is installed.
 
+# The name of the "driver" executable.
+DRIVER := visitors_preprocess
+
 # The rewriting command.
-REWRITE      := visitors_preprocess
+REWRITE := $(shell \
+   if command -v $(DRIVER) >/dev/null ; \
+   then echo $(DRIVER) ; \
+   else echo "dune exec $(DRIVER) --" ; \
+   fi)
 
 # Use GNU sed to extract the generated code.
 # This requires GNU sed 3.95 or above, I am told.
