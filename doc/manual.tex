@@ -247,23 +247,30 @@ type of expressions is extended with new cases.
 \subsection{What is the type of a visitor?}
 \label{sec:intro:type}
 
-In this document, most of the time, we prefer to show the code of a visitor
-class and omit its type. There are two reasons for this. First, this type is
-often verbose, as the class has many methods, and complex, as several type
-variables are often involved. Second, although we can explain the type of a
-generated visitor on a case-by-case basis, we cannot in the general case
-predict the type of a generated visitor.
-The reason is, the type of a generated visitor depends upon the
-types of the classes that are inherited via the \ancestors parameter
-(\sref{sec:ancestors}). Because a \texttt{ppx} syntax extension transforms
+As can be seen in this document,
+% since 2025/11/14,
+in a generated visitor,
+each method carries a type annotation.
+%
+This annotation is partial:
+the type of the parameter \oc|env| is unspecified.
+%
+This is intentional:
+the type of this parameter
+can be influenced
+by the classes that are inherited via the \ancestors parameter
+(\sref{sec:ancestors}).
+%
+Because a \texttt{ppx} syntax extension transforms
 untyped syntax trees to untyped syntax trees, the \visitors syntax extension
-does not have access to this information.
+does not have access to type information
+and cannot predict the type of the parameter \oc|env|.
 
-For this reason, the \visitors syntax extension cannot generate any type
-declarations. Thus, the annotation \derivingvisitors can be used only in an
-\texttt{\%.ml} file, not in an \texttt{\%.mli} file. When it is used in an
-\texttt{\%.ml} file, the corresponding \texttt{\%.mli} file should either be
-omitted altogether or be written by hand.
+For this reason, the \visitors syntax extension cannot generate the type of a
+visitors class. In other words, the annotation \derivingvisitors can be used
+only in an \texttt{\%.ml} file, not in an \texttt{\%.mli} file. When it is
+used in an \texttt{\%.ml} file, the corresponding \texttt{\%.mli} file should
+either be omitted altogether or be written by hand.
 
 \input{types}
 
@@ -769,10 +776,9 @@ For this reason, we refer to these two approaches as the \emph{monomorphic}
 approach and the \emph{polymorphic} approach, respectively.
 
 The monomorphic approach offers the advantage that the type of every method is
-inferred by OCaml. Indeed, in this mode, the generated code need not contain
-any type annotations. This allows correct, most general (monomorphic) types to
-be obtained even in the case where certain hand-written visitor methods
-(provided via the \ancestors parameter) have unconventional types.
+inferred by OCaml. Correct and most general (monomorphic) types are obtained
+even if certain hand-written visitor methods (provided via the \ancestors
+parameter) have unconventional types.
 %
 % The downside of this approach is that it does not allow taking several
 % distinct instances of a parameterized type. In particular, it is restricted
