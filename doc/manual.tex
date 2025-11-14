@@ -1784,7 +1784,8 @@ end
 \end{lstlisting}
 \end{mdframed}
 
-This is not valid OCaml: we write \oc|'r[b]| for the type-level application of
+This is not valid OCaml: we use our own fictitious notation.
+We write \oc|'r[b]| for the type-level application of
 \oc|'r| to \oc|'b|. The type of each method is universally quantified in
 \oc|'b|, as desired. The type of \tyconvisitor{option} seems to have the
 desired generality. By instantiating both~\oc|'r| and~\oc|'s| with the
@@ -1792,7 +1793,9 @@ type-level function \oc|fun 'b -> 'z|, we obtain the type of
 \tyconvisitor{option} in the class \reduce. By instantiating \oc|'r| and
 \oc|'s| with the type-level functions
 %
-\oc|fun 'b -> 'b| and \oc|fun 'b -> 'b option|, respectively, we obtain the
+\oc|fun 'b -> 'b| and \oc|fun 'b -> 'b option|,
+respectively,
+we obtain the
 type of \tyconvisitor{option} in the class \map.
 
 This suggests that higher kinds, type-level functions, and type-level
@@ -1802,106 +1805,11 @@ programming languages, but also in an object-oriented programming setting.
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
+\input{fig-params}
+
+\clearpage
+
 \section{Reference}
-
-% ------------------------------------------------------------------------------
-% Parameters.
-
-\begin{figure}[p]
-\renewcommand{\arraystretch}{1.5}
-\small
-\begin{tabular}{@{}r@{\qquad}l@{\quad}p{.66\textwidth}@{}}
-  \ancestors & (list of strings) &
-    A list of classes that the generated class should inherit.
-    This is an optional parameter;
-    its default value is the empty list.
-    Unless \nude is \texttt{true},
-    the class \runtime{<variety>} is implicitly prepended to this list.
-    Every ancestor class must have exactly \emph{one} type parameter,
-    which is typically (but not necessarily) the type of ``self''.
-\\
-  \buildprefix & (string) &
-    The prefix that is used in the name of the build methods in \fold and
-    \foldtwo visitors (\sref{sec:intro:fold}).
-    This is an optional parameter, whose default value is ``\texttt{build\_}''.
-\\
-  \concrete & (Boolean) &
-    If this parameter is \texttt{true} then
-    the generated class is declared
-    concrete; otherwise, it is declared virtual.
-    This is an optional parameter; its default value is \texttt{false}.
-\\
-  \data & (Boolean) &
-    If this parameter is \texttt{true} then
-    one visitor method is generated for every data constructor (\sref{sec:structure}).
-    Otherwise, this method is not generated (it is inlined instead).
-    This is an optional parameter; its default value is \texttt{true}.
-\\
-  \failprefix & (string) &
-    The prefix that is used in the name of the failure methods in
-    visitors of arity two (\sref{sec:intro:aritytwo}).
-    This is an optional parameter, whose default value is ``\texttt{fail\_}''.
-\\
-  \irregular & (Boolean) &
-    If this parameter is \texttt{true} then
-    the regularity check (\sref{sec:regularity}) is disabled;
-    otherwise, it is enabled.
-    This is an optional parameter; its default value is \texttt{false}.
-\\
-  \name & (string) &
-    The name of the generated class.
-    This is an optional parameter; its default value is \oc|<variety>|.
-\\
-  \nude & (Boolean) &
-    If this parameter is \texttt{true}
-    then the class \runtime{<variety>} is \emph{not} implicitly prepended to
-    the list \ancestors.
-    This is an optional parameter; its default value is \texttt{false}.
-\\
-  \polymorphic & (Boolean) &
-    If this parameter is \texttt{true} then
-    type variables are handled by virtual visitor methods,
-    and generated methods are monomorphic
-    (\sref{sec:intro:parameterized:mono});
-    otherwise, type variables are handled by visitor functions,
-    and generated methods are polymorphic
-    (\sref{sec:intro:parameterized:poly}).
-    This is an optional parameter, whose default value is \texttt{false}.
-\\
-  \public & (list of strings) &
-    This is an optional parameter.
-    If absent, then every method in the generated class is declared public.
-    If present, then every method in the generated class is declared
-    private, except those whose name appears in the list: those are declared public.
-\\
-  \variety & (string) &
-    The variety of visitor that should be generated.
-    The supported varieties are
-    \iter (\sref{sec:intro:iter:def}),
-    \map (\sref{sec:intro:map}) and
-    \mapendo (\sref{sec:intro:endo}),
-    \reduce (\sref{sec:intro:reduce}),
-    \mapreduce (\sref{sec:intro:mapreduce}),
-    \fold (\sref{sec:intro:fold}),
-    \itertwo,
-    \maptwo,
-    \reducetwo,
-    \mapreducetwo,
-    \foldtwo (\sref{sec:intro:aritytwo}).
-\\
-  \visitprefix & (string) &
-    The prefix that is used in the name of visitor methods.
-    This is an optional parameter, whose default value is ``\texttt{visit\_}''.
-    If this prefix is changed then the classes provided by the
-    library \texttt{VisitorsRuntime} become useless: in that case, one might wish to
-    also specify \verb+nude = true+, so as to not inherit these classes.
-\end{tabular}
-\vspace{2.5mm}
-\hrule
-\vspace{2.5mm}
-\caption{Parameters of \derivingvisitors}
-\label{fig:params}
-\end{figure}
 
 \subsection{Parameters}
 \label{sec:params}
@@ -2340,6 +2248,8 @@ For instance, suppose that the module \oc|Point| has the following signature:
 \lstinputlisting{point.mli}
 \end{mdframed}
 
+\enlargethispage{\baselineskip} % avoid breaking the code that follows
+
 Suppose that, outside of this module, one wishes to generate a \map visitor
 for the type \oc|Point.point|. One would like to do this in the style that was
 presented earlier (\sref{sec:import}), but a naïve attempt fails: the
@@ -2372,6 +2282,8 @@ Instead of \oc|[@build]|, one can use
 % as the attribute would then be silently ignored.
 
 % ------------------------------------------------------------------------------
+
+\clearpage
 
 \bibliographystyle{plain}
 \bibliography{english,local}

@@ -1,0 +1,98 @@
+% ------------------------------------------------------------------------------
+% Parameters.
+
+\begin{figure}[p]
+\renewcommand{\arraystretch}{1.5}
+\small
+\begin{tabular}{@{}r@{\qquad}l@{\quad}p{.66\textwidth}@{}}
+  \ancestors & (list of strings) &
+    A list of classes that the generated class should inherit.
+    This is an optional parameter;
+    its default value is the empty list.
+    Unless \nude is \texttt{true},
+    the class \runtime{<variety>} is implicitly prepended to this list.
+    Every ancestor class must have exactly \emph{one} type parameter,
+    which is typically (but not necessarily) the type of ``self''.
+\\
+  \buildprefix & (string) &
+    The prefix that is used in the name of the build methods in \fold and
+    \foldtwo visitors (\sref{sec:intro:fold}).
+    This is an optional parameter, whose default value is ``\texttt{build\_}''.
+\\
+  \concrete & (Boolean) &
+    If this parameter is \texttt{true} then
+    the generated class is declared
+    concrete; otherwise, it is declared virtual.
+    This is an optional parameter; its default value is \texttt{false}.
+\\
+  \data & (Boolean) &
+    If this parameter is \texttt{true} then
+    one visitor method is generated for every data constructor (\sref{sec:structure}).
+    Otherwise, this method is not generated (it is inlined instead).
+    This is an optional parameter; its default value is \texttt{true}.
+\\
+  \failprefix & (string) &
+    The prefix that is used in the name of the failure methods in
+    visitors of arity two (\sref{sec:intro:aritytwo}).
+    This is an optional parameter, whose default value is ``\texttt{fail\_}''.
+\\
+  \irregular & (Boolean) &
+    If this parameter is \texttt{true} then
+    the regularity check (\sref{sec:regularity}) is disabled;
+    otherwise, it is enabled.
+    This is an optional parameter; its default value is \texttt{false}.
+\\
+  \name & (string) &
+    The name of the generated class.
+    This is an optional parameter; its default value is \oc|<variety>|.
+\\
+  \nude & (Boolean) &
+    If this parameter is \texttt{true}
+    then the class \runtime{<variety>} is \emph{not} implicitly prepended to
+    the list \ancestors.
+    This is an optional parameter; its default value is \texttt{false}.
+\\
+  \polymorphic & (Boolean) &
+    If this parameter is \texttt{true} then
+    type variables are handled by virtual visitor methods,
+    and generated methods are monomorphic
+    (\sref{sec:intro:parameterized:mono});
+    otherwise, type variables are handled by visitor functions,
+    and generated methods are polymorphic
+    (\sref{sec:intro:parameterized:poly}).
+    This is an optional parameter, whose default value is \texttt{false}.
+\\
+  \public & (list of strings) &
+    This is an optional parameter.
+    If absent, then every method in the generated class is declared public.
+    If present, then every method in the generated class is declared
+    private, except those whose name appears in the list: those are declared public.
+\\
+  \variety & (string) &
+    The variety of visitor that should be generated.
+    The supported varieties are
+    \iter (\sref{sec:intro:iter:def}),
+    \map (\sref{sec:intro:map}) and
+    \mapendo (\sref{sec:intro:endo}),
+    \reduce (\sref{sec:intro:reduce}),
+    \mapreduce (\sref{sec:intro:mapreduce}),
+    \fold (\sref{sec:intro:fold}),
+    \itertwo,
+    \maptwo,
+    \reducetwo,
+    \mapreducetwo,
+    \foldtwo (\sref{sec:intro:aritytwo}).
+\\
+  \visitprefix & (string) &
+    The prefix that is used in the name of visitor methods.
+    This is an optional parameter, whose default value is ``\texttt{visit\_}''.
+    If this prefix is changed then the classes provided by the
+    library \texttt{VisitorsRuntime} become useless: in that case, one might wish to
+    also specify \verb+nude = true+, so as to not inherit these classes.
+\end{tabular}
+\vspace{2.5mm}
+\hrule
+\vspace{2.5mm}
+\caption{Parameters of \derivingvisitors}
+\label{fig:params}
+\end{figure}
