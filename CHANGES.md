@@ -1,5 +1,9 @@
 # Changes
 
+## 2026/05/20
+
+* Change the license from LGPL 2.1 to LGPL 2.1 with a linking exception.
+
 ## 2025/11/14
 
 * `visitors` now decorates every generated method with a type annotation.
