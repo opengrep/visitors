@@ -1,3 +1,10 @@
+> **Fork.** This is the opengrep fork of
+> [visitors](https://gitlab.inria.fr/fpottier/visitors), based on upstream `master`
+> after release 20260520. It differs from upstream by one change: every generated
+> function is built as a single function of all its parameters, so that under the OCaml
+> 5.2 AST of ppxlib 0.36 and later a generated method is not compiled into a chain of
+> one-parameter closures.
+
 An OCaml syntax extension (technically, a ppx_deriving plugin) which generates
 object-oriented visitors for traversing and transforming data structures.
 
