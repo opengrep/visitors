@@ -24,7 +24,7 @@ let ty_arrow (a : core_type) (b : core_type) : core_type =
 (* Constructing a function. *)
 
 let plambda (p : pattern) (e : expression) : expression =
-  Exp.fun_ Nolabel None p e
+  Ast_builder.Default.coalesce_arity (Exp.fun_ Nolabel None p e)
 
 (* [ld_label] and [ld_ty] extract a label and type out of an OCaml record label
    declaration. *)
